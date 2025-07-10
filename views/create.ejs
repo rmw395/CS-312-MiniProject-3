@@ -1,0 +1,40 @@
+<%- include("partials/header.ejs"); %>
+
+<% if (locals.postToEdit) { %>
+    <h2>Edit Post</h2>
+    <form action="/submit" method="POST">
+        <p>
+        <label for="author">Edit your name:</label>
+        <input type="text" name="author" value="<%=postToEdit.author%>" required>
+        </p>
+        <p>
+        <label for="title">Edit post title:</label>
+        <input type="text" name="title" value="<%= postToEdit.title%>" required>
+        </p>
+        <p>
+        <label for="content">Edit your post:</label>
+        <input type="text" name="content" value="<%= postToEdit.content%>" required>
+        </p>
+        <input type="submit" value="Submit">
+    </form>
+
+<% } else { %>
+    <h2>Make a Post</h2>
+    <form action="/submit" method="POST">
+        <p>
+        <label for="author">Your name:</label>
+        <input type="text" name="author" required>
+        </p>
+        <p>
+        <label for="title">Post title:</label>
+        <input type="text" name="title" required>
+        </p>
+        <p>
+        <label for="content">Write your post:</label>
+        <input type="text" name="content" required>
+        </p>
+        <input type="submit" value="Submit">
+    </form>
+<% } %>
+
+<%- include("partials/footer.ejs"); %>
