@@ -5,9 +5,9 @@
     <h2>Browse Posts</h2>
     <% if (posts.length > 0) { %>
         <% posts.forEach((element, index) => { %>
-            <h3> <%= element.pTitle %> </h3>
-            <h4> <em><%= element.pAuthor %></em> </h4>
-            <p> <%= element.pContent %> </p>
+            <h3> <%= element.title %> </h3>
+            <h4> <em><%= element.creator_name %></em> </h4>
+            <p> <%= element.body %> </p>
             <form action="/edit/<%= index %>" method="GET">
                 <button type="submit">Edit</button>
             </form>

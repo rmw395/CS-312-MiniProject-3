@@ -26,12 +26,34 @@ app.listen(port, () => {
     console.log(`Server started on port ${port}.`)
 });
 
-app.get("/", (req, res) => {
-    res.render("index.ejs", {posts});
+app.get("/", async (req, res) => {
+    try {
+        const result = await db.query("SELECT * FROM blogs ORDER BY blog_id ASC");
+        posts = result.rows;
+
+        res.render("index.ejs", {posts});
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 app.get("/create", (req, res) => {
     res.render("create.ejs");
+});
+
+app.post("/submit", (req, res) => {
+    const postAuthor = req.body['author'];
+    const postTitle = req.body['title'];
+    const postContent = req.body['content'];
+    const newPost = {
+        creator_name: postAuthor,
+        title: postTitle,
+        body: postContent,
+        // pDate: today.toDateString()
+    };
+
+    posts.push(newPost);
+    res.redirect("/");
 });
 
 app.get("/edit/:id", (req, res) => {
@@ -41,27 +63,12 @@ app.get("/edit/:id", (req, res) => {
     res.render("create.ejs", {postToEdit, postId});
 });
 
-app.post("/submit", (req, res) => {
-    const postAuthor = req.body['author'];
-    const postTitle = req.body['title'];
-    const postContent = req.body['content'];
-    const newPost = {
-        pAuthor: postAuthor,
-        pTitle: postTitle,
-        pContent: postContent,
-        // pDate: today.toDateString()
-    };
-
-    posts.push(newPost);
-    res.redirect("/");
-});
-
 app.post("/edit/:id", (req, res) => {
     const postId = req.params.id;
 
-    posts[postId].pAuthor = req.body.author;
-    posts[postId].pTitle = req.body.title;
-    posts[postId].pContent = req.body.content;
+    posts[postId].creator_name = req.body.author;
+    posts[postId].title = req.body.title;
+    posts[postId].body = req.body.content;
 
     res.redirect("/");
 });
@@ -70,4 +77,29 @@ app.post("/delete/:id", (req, res) => {
     posts.splice(req.params.id, 1);
 
     res.redirect("/");
+});
+
+app.get("/signup", (req, res) => {
+    res.render("signup.ejs");
+});
+
+app.post("/signup", async (req, res) => {
+    try {
+        // TODO: check for user id already taken
+
+        await db.query("INSERT INTO users (user_id, password, name) VALUES ($1, $2, $3)", 
+            [username, password, displayName]
+        );
+        res.redirect("/login");
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+app.get("/login", (req, res) => {
+    res.render("login.ejs");
+});
+
+app.post("/login", async (req, res) => {
+    // login
 });

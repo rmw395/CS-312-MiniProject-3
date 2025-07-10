@@ -1,3 +1,20 @@
 <%- include("partials/header.ejs"); %>
 
+<h2>Create an account</h2>
+<form action="/signup" method="POST">
+    <p>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+    </p>
+    <p>
+        <label for="displayName">Display name:</label>
+        <input type="text" name="displayName" required>
+    </p>
+    <p>
+        <label for="password">Password:</label>
+        <input type="text" name="password" required>
+    </p>
+    <input type="submit" value="Sign up">
+</form>
+
 <%- include("partials/footer.ejs"); %>
