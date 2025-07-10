@@ -2,7 +2,7 @@
 
 <% if (locals.postToEdit) { %>
     <h2>Edit Post</h2>
-    <form action="/submit" method="POST">
+    <form action="/edit/<%= postId %>" method="POST">
         <p>
         <label for="author">Edit your name:</label>
         <input type="text" name="author" value="<%=postToEdit.author%>" required>

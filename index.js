@@ -1,12 +1,13 @@
 import bodyParser from "body-parser";
 import express from "express";
+import pg from "pg";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
 const port = 3000;
 
-const db = new PG.Client({
+const db = new pg.Client({
     user: "postgres",
     host: "localhost",
     database: "blogapp",
@@ -58,9 +59,9 @@ app.post("/submit", (req, res) => {
 app.post("/edit/:id", (req, res) => {
     const postId = req.params.id;
 
-    posts[postId].pAuthor = req.form.author;
-    posts[postId].pTitle = req.form.title;
-    posts[postId].pContent = req.form.content;
+    posts[postId].pAuthor = req.body.author;
+    posts[postId].pTitle = req.body.title;
+    posts[postId].pContent = req.body.content;
 
     res.redirect("/");
 });

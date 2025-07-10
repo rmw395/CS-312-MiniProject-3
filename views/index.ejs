@@ -1,12 +1,14 @@
 <%- include("partials/header.ejs"); %>
 
+<%- include("create.ejs"); %>
+
     <h2>Browse Posts</h2>
     <% if (posts.length > 0) { %>
         <% posts.forEach((element, index) => { %>
             <h3> <%= element.pTitle %> </h3>
             <h4> <em><%= element.pAuthor %></em> </h4>
             <p> <%= element.pContent %> </p>
-            <form action="/edit/<%= index %>" method="POST">
+            <form action="/edit/<%= index %>" method="GET">
                 <button type="submit">Edit</button>
             </form>
             <form action= "/delete/<%= index %>" method="POST">
