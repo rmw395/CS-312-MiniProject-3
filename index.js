@@ -6,12 +6,18 @@ import { fileURLToPath } from "url";
 const app = express();
 const port = 3000;
 
+const db = new PG.Client({
+    user: "postgres",
+    host: "localhost",
+    database: "blogapp",
+    password: "y^x6kMHJ@pm6Ja",
+    port: 5432
+});
+db.connect();
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(morgan("tiny"));
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 let posts = [];
 
