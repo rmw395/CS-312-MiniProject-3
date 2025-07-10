@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let posts = [];
+let current_user = null;
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}.`)
@@ -84,6 +85,10 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const displayName = req.body.displayName;
+
     try {
         // TODO: check for user id already taken
 
@@ -101,5 +106,19 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    // login
+    const username = req.body.username;
+    const password = req.body.password;
+
+    try {
+        // log in
+        await db.query("SELECT * FROM users WHERE user_id = $1 AND password = $2",
+            [username, password]
+        );
+
+        current_user = username;
+
+        res.redirect("/");
+    } catch (err) {
+        console.log(err);
+    }
 });
