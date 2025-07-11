@@ -9,7 +9,8 @@
     <% if (posts.length > 0) { %>
         <% posts.forEach((element, index) => { %>
             <h3> <%= element.title %> </h3>
-            <h4> <em><%= element.creator_name %></em> </h4>
+            <h4> <em><%= element.creator_name %> </em> </h4>
+            <h4> <%= element.date_created %> </h4>
             <p> <%= element.body %> </p>
             <form action="/edit/<%= element.blog_id %>" method="GET">
                 <button type="submit">Edit</button>

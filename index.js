@@ -71,20 +71,30 @@ app.post("/submit", async (req, res) => {
     res.redirect("/");
 });
 
-app.get("/edit/:id", (req, res) => {
+app.get("/edit/:id", async (req, res) => {
     // TODO: only edit if correct user
 
     const postId = req.params.id;
-    const postToEdit = posts[postId];
+    const postToEdit = posts[postId-1];
+
+    console.log(postToEdit);
 
     res.render("create.ejs", {postToEdit, postId});
 });
 
-app.post("/edit/:id", (req, res) => {
+app.post("/edit/:id", async (req, res) => {
     const postId = req.params.id;
 
-    posts[postId].title = req.body.title;
-    posts[postId].body = req.body.content;
+    // posts[postId].title = req.body.title;
+    // posts[postId].body = req.body.content;
+
+    try {
+        await db.query("UPDATE blogs SET title = ($1) body = ($2) WHERE blog_id = $3",
+            [req.body.title, req.body.content, id ]
+        );
+    } catch (err) {
+        console.log(err);
+    }
 
     res.redirect("/");
 });
