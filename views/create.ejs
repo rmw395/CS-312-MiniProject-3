@@ -4,10 +4,6 @@
     <h2>Edit Post</h2>
     <form action="/edit/<%= postId %>" method="POST">
         <p>
-        <label for="author">Edit your name:</label>
-        <input type="text" name="author" value="<%=postToEdit.author%>" required>
-        </p>
-        <p>
         <label for="title">Edit post title:</label>
         <input type="text" name="title" value="<%= postToEdit.title%>" required>
         </p>
@@ -21,10 +17,6 @@
 <% } else { %>
     <h2>Make a Post</h2>
     <form action="/submit" method="POST">
-        <p>
-        <label for="author">Your name:</label>
-        <input type="text" name="author" required>
-        </p>
         <p>
         <label for="title">Post title:</label>
         <input type="text" name="title" required>

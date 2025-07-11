@@ -1,6 +1,9 @@
 <%- include("partials/header.ejs"); %>
 
-<%- include("create.ejs"); %>
+<% if (!(current_user = null)) { %>
+    <%- include("create.ejs"); %>
+
+<% } %>
 
     <h2>Browse Posts</h2>
     <% if (posts.length > 0) { %>
@@ -8,10 +11,10 @@
             <h3> <%= element.title %> </h3>
             <h4> <em><%= element.creator_name %></em> </h4>
             <p> <%= element.body %> </p>
-            <form action="/edit/<%= index %>" method="GET">
+            <form action="/edit/<%= element.blog_id %>" method="GET">
                 <button type="submit">Edit</button>
             </form>
-            <form action= "/delete/<%= index %>" method="POST">
+            <form action= "/delete/<%= element.blog_id %>" method="POST">
                 <button type="submit">Delete</button>
             </form>
         <% }); %>
